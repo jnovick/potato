@@ -1,2 +1,15 @@
+stages:
+  - build
+  - test
+
 language: java
 jdk: openjdk11
+
+jobs:
+  - stage: test
+    install: ./gradlew assemble
+    script: ./gradlew test
+  - stage: build
+    script: ./gradlew assemble
+    install: true
+
