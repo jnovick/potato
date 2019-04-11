@@ -1,0 +1,28 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+buildJob:
+  image: openjdk:11-jdk
+  stage: build
+  script: ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 10 min
+
+testJob:
+  image: openjdk:11-jdk
+  stage: test
+  script: ./gradlew test
+  dependencies:
+    - buildJob
+
+deployjob:
+  stage: deploy
+  image: alpine
+  script: echo "Fake deploy"
+  only:
+    - master
